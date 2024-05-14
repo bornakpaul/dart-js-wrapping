@@ -53,9 +53,10 @@ class JsWrappingGenerator extends Generator {
         partsContent.join('\n');
   }
 
-  String generateForTemplate(ClassElement clazzTemplate) => clazzTemplate.isEnum
-      ? generateForEnum(clazzTemplate)
-      : generateForClass(clazzTemplate);
+  String generateForTemplate(ClassElement clazzTemplate) =>
+      clazzTemplate is EnumElement
+          ? generateForEnum(clazzTemplate)
+          : generateForClass(clazzTemplate);
 
   String generateForEnum(ClassElement clazzTemplate) {
     final doc = getDoc(clazzTemplate) ?? '';
@@ -313,7 +314,7 @@ $extensionContent
 
   bool isEnum(DartType dartType) {
     final element = dartType.element;
-    return element is ClassElement && element.isEnum;
+    return element is ClassElement && element is EnumElement;
   }
 
   String _convertParam(
@@ -427,5 +428,5 @@ ClassElement? getType(
     LibraryElement libElement, String libName, String className) {
   final lib =
       libElement.importedLibraries.firstWhereOrNull((l) => l.name == libName);
-  return lib?.getType(className);
+  return lib?.getClass(className);
 }

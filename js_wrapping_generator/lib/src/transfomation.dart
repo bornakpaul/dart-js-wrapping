@@ -15,7 +15,7 @@ String getSourceCode(Element element) {
 }
 
 AstNode getNode(Element element) =>
-    (element.session!.getParsedLibraryByElement2(element.library!)
+    (element.session!.getParsedLibraryByElement(element.library!)
             as ParsedLibraryResult)
         .getElementDeclaration(element)!
         .node;
